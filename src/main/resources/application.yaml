@@ -1,0 +1,24 @@
+server.port: 8010
+spring.application.name: UkrDashboard
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:8011/ukrdashboard
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+  flyway:
+    url: jdbc:mysql://localhost:8011/ukrdashboard
+    baseline-on-migrate: true
+    user: root
+    password: root
+
+config:
+  scheduler:
+    update-uefa-coefficients-feed:
+      initialDelay: 1000
+      fixedDelay: 600000
