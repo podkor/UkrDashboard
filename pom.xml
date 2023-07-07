@@ -142,8 +142,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <configLocation>../artemis_checks.xml</configLocation>
-<!--                    <configLocation>google_checks.xml</configLocation>-->
+                    <configLocation>google_checks.xml</configLocation>
                 </configuration>
             </plugin>
             <plugin>
