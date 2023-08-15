@@ -3,23 +3,21 @@ package com.podkor.ukrdashboard.service.feed;
 import com.podkor.ukrdashboard.dto.FeedType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.podkor.ukrdashboard.dto.FeedType.UEFA_COUNTRY_COEFFICIENTS;
+import static com.podkor.ukrdashboard.dto.FeedType.MINUS_RUS;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UEFACountryCoefficientsFeedService extends AbstractFeedService {
+public class MinusRusFeedService extends AbstractFeedService {
 
-    private final static FeedType FEED_TYPE = UEFA_COUNTRY_COEFFICIENTS;
-    private final static String URL = "https://terrikon.com/uk/football/uefa_coefs";
-    private final static String SEASON = "2023";
+    private final static FeedType FEED_TYPE = MINUS_RUS;
+    private final static String DIV_ID = "minusRus";
+    private final static String URL = "";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -28,12 +26,7 @@ public class UEFACountryCoefficientsFeedService extends AbstractFeedService {
         initialDelayString = "${config.scheduler.update-uefa-coefficients-feed.initialDelay}",
         fixedDelayString = "${config.scheduler.update-uefa-coefficients-feed.fixedDelay}")
     public void updateFeed() {
-        Document doc = getHtmlContent(String.format(getUrl(), SEASON));
-        Elements mainCol = doc.getElementsByClass("maincol");
-        String htmlData = mainCol
-            .outerHtml()
-            .replace("/i/flag/s/", "https://terrikon.com/i/flag/s/");
-
+        String htmlData = "<ins data-wrapper=\"minusrus-widget\" data-width=\"240\" data-lang=\"ua\"></ins><script defer src=\"https://minusrus.com/widget/init.js\"></script>";
         updateByFeedType(formatHtmlData(htmlData));
         log.info("Feed data has been updated: {}", getFeedType());
     }
@@ -45,7 +38,7 @@ public class UEFACountryCoefficientsFeedService extends AbstractFeedService {
 
     @Override
     public String formatHtmlData(String htmlData) {
-        return DIV_TAG + htmlData + DIV_CLOSE_TAG;
+        return formatDivTag(DIV_ID, "") + htmlData + DIV_CLOSE_TAG;
     }
 
     @Override

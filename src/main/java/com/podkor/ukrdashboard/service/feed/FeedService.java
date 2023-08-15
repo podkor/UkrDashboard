@@ -11,4 +11,8 @@ public interface FeedService {
     String getHtmlData(Long tabId);
 
     FeedType getFeedType();
+
+    boolean canHandle(FeedType feedType);
+
+    String formatHtmlData(String htmlData);
 }
