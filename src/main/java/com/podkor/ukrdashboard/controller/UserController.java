@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.token.Token;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,29 +26,17 @@ import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
-@RestController
+@Controller
 @RequestMapping("/app/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(value = "/signin")
-    public ResponseEntity<String> login(@RequestBody LoginDetailsDto loginDetails) {
-        String token = userService.login(loginDetails.getUsername(), loginDetails.getPassword());
-        return new ResponseEntity(token, HttpStatus.OK);
-    }
+//    @PostMapping(value = "/signin")
+//    public ResponseEntity<String> login(@RequestBody LoginDetailsDto loginDetails) {
+//        String token = userService.login(loginDetails.getUsername(), loginDetails.getPassword());
+//        return new ResponseEntity(token, HttpStatus.OK);
+//    }
 
-    // Login form
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    // Login form with error
-    @GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
-    }
 }

@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+    <div th:fragment="adminPanel">
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <div id="adminPanel">
+                <a style="margin: 20px;" th:href="@{/app/data/new}">
+                    Add new Data Tab
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

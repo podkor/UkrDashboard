@@ -1,18 +1,23 @@
 package com.podkor.ukrdashboard.config;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -48,21 +53,26 @@ public class SecurityConfig {
 ////            .logoutSuccessHandler(logoutSuccessHandler());
 //        return http.build();
 
-        http
+        http.userDetailsService(userDetailsService)
             .authorizeRequests()
-//            .antMatchers("/static/**")
-//            .permitAll()
-            .anyRequest().permitAll()
+            .antMatchers("/app/data").permitAll()
+            .antMatchers("/static/**").permitAll()
+            .anyRequest().authenticated()
             .and()
-            .formLogin()
-            .loginPage("/app/user/login.html")
-            .failureUrl("/app/user/login-error.html")
-            .and()
-            .logout()
-            .logoutSuccessUrl("/app/data");
+            .formLogin(form -> form
+                .loginPage("/app/login")
+                .failureUrl("/app/login?error=true")
+                .defaultSuccessUrl("/app/data")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/app/logout")
+                 .logoutSuccessUrl("/app/data")
 
-                return http.build();
 
+            );
+
+        return http.build();
     }
 
 //    @Override
@@ -80,4 +90,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
+
 }

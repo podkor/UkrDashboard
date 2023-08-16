@@ -1,10 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <div th:fragment="header-css">
-        <!-- this is header-css -->
-        <link rel="stylesheet" type="text/css"
-              href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-
         <link rel="stylesheet" th:href="@{/static/css/main.css}"
               href="../../static/css/main.css" />
     </div>
@@ -18,11 +15,20 @@
             </a>
         </div>
         <div id="logoHeader">Ukr Dashboard
-            <div id="login">
-                <a th:href="@{/app/user/login}">Log In</a>
+            <div id="logInUser">
+                <div sec:authorize="isAuthenticated()">
+                    <span sec:authentication="name"></span>
+                    <form th:action="@{/app/logout}" method="post">
+                        <div>
+                            <input type="submit" value="Log out" />
+                        </div>
+                    </form>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a th:href="@{/app/login}">Log in</a>
+                </div>
             </div>
         </div>
-
     </div>
 
 </body>

@@ -1,15 +1,3 @@
-/*h1{*/
-/*    color:#0000FF;*/
-/*}*/
-
-/*h2{*/
-/*    color:#FF0000;*/
-/*}*/
-
-/*footer{*/
-/*    margin-top:60px;*/
-/*}*/
-
 #homeHeader {
     margin: 30px;
     float: left;
@@ -21,11 +9,20 @@
     height: 120px;
     font-size: 100px;
 }
-#login {
+#logInUser {
     margin: 40px;
     color: #f8c404;
     float: right;
     font-size: 20px;
+}
+
+#dataPanel {
+    float: left;
+}
+#adminPanel {
+    height: 50px;
+    background-color: #00B48B;
+    color: #e6ffe6;
 }
 
 .tabDiv {
