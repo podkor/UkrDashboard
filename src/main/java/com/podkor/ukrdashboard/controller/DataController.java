@@ -24,14 +24,14 @@ public class DataController {
     private final DataService dataService;
     private final CategoriesMenuService categoriesMenuService;
 
-    @GetMapping("/{tabId}")
-    public String getTabData(
-        @PathVariable Long tabId,
-        Model model
-    ) {
-        model.addAttribute("htmlData", dataService.getHtmlData(tabId));
-        return "index";
-    }
+//    @GetMapping("/{tabId}")
+//    public String getTabData(
+//        @PathVariable Long tabId,
+//        Model model
+//    ) {
+//        model.addAttribute("htmlData", dataService.getHtmlData(tabId));
+//        return "index";
+//    }
 
     @GetMapping
     public String getData(

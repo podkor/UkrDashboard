@@ -34,32 +34,32 @@ public class UserService implements InitializingBean {
             create(admin);
         }
     }
-
-    public String login(String username, String password) {
-        try {
-            authenticationConfiguration.getAuthenticationManager()
-                                       .authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            User user = userRepository.findByUsernameAndActiveIsTrue(username);
-            if (!user.isActive()) {
-                throw new RestException("Invalid username/password supplied");
-            }
-            return user.getUsername();
-        } catch (Exception e) {
-            throw new RestException("Invalid username/password supplied");
-        }
-    }
+//
+//    public String login(String username, String password) {
+//        try {
+//            authenticationConfiguration.getAuthenticationManager()
+//                                       .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+//            User user = userRepository.findByUsernameAndActiveIsTrue(username);
+//            if (!user.isActive()) {
+//                throw new RestException("Invalid username/password supplied");
+//            }
+//            return user.getUsername();
+//        } catch (Exception e) {
+//            throw new RestException("Invalid username/password supplied");
+//        }
+//    }
 
     @Transactional
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
-
-    public String getUsername() {
-        org.springframework.security.core.userdetails.User principal =
-            (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
-                                                                                      .getAuthentication()
-                                                                                      .getPrincipal();
-        return principal.getUsername();
-    }
+//
+//    public String getUsername() {
+//        org.springframework.security.core.userdetails.User principal =
+//            (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
+//                                                                                      .getAuthentication()
+//                                                                                      .getPrincipal();
+//        return principal.getUsername();
+//    }
 }
