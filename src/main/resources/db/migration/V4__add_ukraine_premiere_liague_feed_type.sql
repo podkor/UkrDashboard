@@ -1,0 +1,2 @@
+INSERT INTO data_tab(feed_type, category) VALUES ('UKRAINE_PREMIER_LIAGUE_TABLE', 'FOOTBALL');
+INSERT INTO raw_html_data(feed_type) VALUES ('UKRAINE_PREMIER_LIAGUE_TABLE');

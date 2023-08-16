@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css"
+              href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+        <link rel="stylesheet" th:href="@{/static/css/main.css}"
+              href="../../static/css/main.css" />
+    </div>
+</head>
+<body>
+    <!-- this is header -->
+    <div th:fragment="header">
+        <div id="homeHeader">
+            <a th:href="@{/app/data}" title="Home">
+                <img height="50px" src="https://toppng.com/uploads/preview/hombutton-white-home-button-11563211148zdfdwfoi16.png" />
+            </a>
+        </div>
+        <div id="logoHeader">Ukr Dashboard
+            <div id="login">
+                <a th:href="@{/app/user/login}">Log In</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

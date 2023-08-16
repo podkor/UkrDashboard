@@ -10,16 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.podkor.ukrdashboard.dto.FeedType.UEFA_COUNTRY_COEFFICIENTS;
+import static com.podkor.ukrdashboard.dto.FeedType.HRYVNIA_RATE;
+import static com.podkor.ukrdashboard.dto.FeedType.UKRAINE_PREMIER_LIAGUE_TABLE;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UEFACountryCoefficientsFeedService extends AbstractFeedService {
+public class HryvniaRateFeedService extends AbstractFeedService {
 
-    private final static FeedType FEED_TYPE = UEFA_COUNTRY_COEFFICIENTS;
-    private final static String URL = "https://terrikon.com/uk/football/uefa_coefs";
-    private final static String SEASON = "2023";
+    private final static FeedType FEED_TYPE = HRYVNIA_RATE;
+    private final static String DIV_ID = "hryvniaRate";
+    private final static String URL = "";
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -28,12 +29,7 @@ public class UEFACountryCoefficientsFeedService extends AbstractFeedService {
         initialDelayString = "${config.scheduler.update-uefa-coefficients-feed.initialDelay}",
         fixedDelayString = "${config.scheduler.update-uefa-coefficients-feed.fixedDelay}")
     public void updateFeed() {
-        Document doc = getHtmlContent(String.format(getUrl(), SEASON));
-        Elements mainCol = doc.getElementsByClass("maincol");
-        String htmlData = mainCol
-            .outerHtml()
-            .replace("/i/flag/s/", "https://terrikon.com/i/flag/s/");
-
+        String htmlData = "<fxwidget-er inverse=\"false\" amount=\"1\" decimals=\"2\" large=\"false\" shadow=\"true\" symbol=\"true\" flag=\"true\" changes=\"true\" grouping=\"true\" border=\"false\" main-curr=\"USD\" sel-curr=\"UAH\" background-color=\"#faf0be\" border-radius=\"0.15\"></fxwidget-er><a href=\"https://currencyrate.today/\">CurrencyRate</a><script async src=\"https://s.fx-w.io/widgets/exchange-rates/latest.js\"></script>";
         updateByFeedType(formatHtmlData(htmlData));
         log.info("Feed data has been updated: {}", getFeedType());
     }
@@ -45,7 +41,7 @@ public class UEFACountryCoefficientsFeedService extends AbstractFeedService {
 
     @Override
     public String formatHtmlData(String htmlData) {
-        return DIV_TAG + htmlData + DIV_CLOSE_TAG;
+        return formatDivTag(DIV_ID, "") + htmlData + DIV_CLOSE_TAG;
     }
 
     @Override
