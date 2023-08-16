@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -20,9 +22,23 @@ public class DataTab {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private FeedType feedType;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    private String htmlData;
+
+    private Instant createdDate;
+
+    private Instant updatedDate;
+
+    @OneToOne
+    private User creator;
+
+    private String styles;
+
+    private Integer height;
+
+    private Integer width;
 }

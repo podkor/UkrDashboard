@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 import static com.podkor.ukrdashboard.dto.Category.FOOTBALL;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
@@ -26,22 +24,14 @@ public class DataController {
     private final DataService dataService;
     private final CategoriesMenuService categoriesMenuService;
 
-    @GetMapping("/tabs")
-    public String getTabList(
-        Model model
-    ) {
-        model.addAttribute("tabList", List.of(1, 2));
-        return "index";
-    }
-
-    @GetMapping("/{tabId}")
-    public String getTabData(
-        @PathVariable Long tabId,
-        Model model
-    ) {
-        model.addAttribute("htmlData", dataService.getHtmlData(tabId));
-        return "index";
-    }
+//    @GetMapping("/{tabId}")
+//    public String getTabData(
+//        @PathVariable Long tabId,
+//        Model model
+//    ) {
+//        model.addAttribute("htmlData", dataService.getHtmlData(tabId));
+//        return "index";
+//    }
 
     @GetMapping
     public String getData(
@@ -52,5 +42,15 @@ public class DataController {
         model.addAttribute("categoriesMenu", categoriesMenuService.createCategoriesMenuDiv(dataCategory));
         model.addAttribute("htmlData", dataService.collectHtmlData(dataCategory));
         return "index";
+    }
+
+    @GetMapping("new")
+    public String addNewData(
+        Model model
+    ) {
+//        Category dataCategory = isEmpty(category) ? DEFAULT_CATEGORY : Category.valueOf(category.toUpperCase());
+//        model.addAttribute("categoriesMenu", categoriesMenuService.createCategoriesMenuDiv(dataCategory));
+//        model.addAttribute("htmlData", dataService.collectHtmlData(dataCategory));
+        return "newData";
     }
 }
